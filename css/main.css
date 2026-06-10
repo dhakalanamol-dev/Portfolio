@@ -17,7 +17,19 @@ body{
     z-index: 1000;
     padding: var(--space-md) var(--space-lg);
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    transition: color var(--transition);
+}
+
+.nav-logo:hover {
+    color: var(--accent-hover);
 }
 
 .nav-list {
