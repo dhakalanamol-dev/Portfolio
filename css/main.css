@@ -41,11 +41,27 @@ body{
     font-size: 0.9rem;
     color: var(--text-secondary);
     transition: color var(--transition);
+    position: relative;
 }
 
 .nav-link:hover,
 .nav-link.active {
-    color: var(--accent-color);
+    color: var(--accent);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent);
+    transition: width var(--transition);
+}
+
+.nav-link.active::after {
+    width: 100%;
 }
 
 .navbar.scrolled {
