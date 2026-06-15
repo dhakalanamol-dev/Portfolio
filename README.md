@@ -3,7 +3,7 @@
 A responsive personal portfolio website built with HTML, CSS, and vanilla JavaScript.
 
 ## Live Demo
-[Coming soon — deploying via GitHub Pages]
+[https://dhakalanamol-dev.github.io/portfolio](https://dhakalanamol-dev.github.io/portfolio)
 
 ## Features
 - Fullscreen scroll-snap sections
