@@ -40,6 +40,8 @@ cd portfolio
 - [ ] Add Experience/Timeline section
 - [ ] Deploy to GitHub Pages with custom domain
 - [ ] Convert to React (Phase 2)
+- [ ] Mobile responsive fixes (layout, spacing, section sizing)
+- [ ] Hamburger menu for mobile navigation
 
 ## License
 MIT
