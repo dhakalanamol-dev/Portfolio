@@ -17,10 +17,12 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) { 
             navLinks.forEach(link => { link.classList.remove('active'); });
 
-            const activeLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
+            // Retargeted to querySelectorAll: the navbar now renders each
+            // link twice (desktop pill + mobile expand menu), so both
+            // instances need the .active class kept in sync. Underlying
+            // active-section logic is unchanged.
+            const activeLinks = document.querySelectorAll(`.nav-link[href="#${entry.target.id}"]`);
+            activeLinks.forEach(link => link.classList.add('active'));
         }
     });
 }, { 
