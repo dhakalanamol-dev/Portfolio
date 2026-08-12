@@ -131,23 +131,23 @@ body{
 .mobile-menu {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 14px;
+    right: 14px;
+    width: auto;
     z-index: 999;
     max-height: 0;
     overflow: hidden;
     display: none;
     flex-direction: column;
-    padding: 0 var(--space-lg);
-    background-color: var(--bg-primary);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 0 var(--space-md);
+    border-radius: 20px;
     transition: max-height var(--transition);
 }
 
 .mobile-menu.open {
     max-height: 400px;
-    padding-top: 88px;
-    padding-bottom: var(--space-lg);
+    padding-top: 84px;
+    padding-bottom: var(--space-md);
 }
 
 .mobile-nav-list {
@@ -173,6 +173,15 @@ body{
 }
 
 @media (max-width: 768px) {
+    .navbar {
+        top: 14px;
+        left: 14px;
+        right: 14px;
+        width: auto;
+        border-radius: 20px;
+        padding: var(--space-sm) var(--space-md);
+    }
+
     .nav-pill {
         display: none;
     }
