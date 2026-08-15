@@ -36,6 +36,7 @@
     -webkit-backdrop-filter: var(--glass-filter);
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
+    transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
 @supports not (backdrop-filter: blur(12px)) {
@@ -81,6 +82,59 @@
     box-shadow:
         inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
         0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Contextual "over-media" navbar state — applied by js/hero.js while the
+   Hero photo sits full-bleed (or near it) behind the fixed navbar. Not a
+   theme switch: the site's data-theme is untouched, this only overrides
+   the navbar's surface/text colors for legibility over the photo. Applies
+   uniformly regardless of theme — in dark mode these values are close
+   enough to the normal dark-theme navbar that the visual change is
+   negligible, so no separate light/dark branching is needed here. */
+body.hero-over-media .nav-pill {
+    background-color: var(--glass-media-bg);
+    border-color: var(--glass-media-border);
+    box-shadow: var(--glass-media-shadow);
+}
+
+/* .navbar itself only carries a background on mobile (it IS the glass
+   shell there — see the @media rule above). On desktop it must stay
+   transparent; applying the media background to it unscoped painted a
+   solid dark bar across the full width behind the pill. */
+@media (max-width: 768px) {
+    body.hero-over-media .navbar {
+        background-color: var(--glass-media-bg);
+        border-color: var(--glass-media-border);
+        box-shadow: var(--glass-media-shadow);
+    }
+}
+
+body.hero-over-media .mobile-menu {
+    background-color: var(--glass-media-bg);
+    border-color: var(--glass-media-border);
+    box-shadow: var(--glass-media-shadow);
+}
+
+body.hero-over-media .nav-logo,
+body.hero-over-media .nav-link,
+body.hero-over-media .theme-toggle,
+body.hero-over-media .nav-hamburger {
+    color: var(--text-media);
+}
+
+body.hero-over-media .hamburger-line {
+    background-color: var(--text-media);
+}
+
+body.hero-over-media .theme-toggle {
+    border-color: var(--text-media-secondary);
+}
+
+body.hero-over-media .theme-toggle:hover,
+body.hero-over-media .nav-link:hover,
+body.hero-over-media .nav-link.active {
+    color: var(--accent);
+    border-color: var(--accent);
 }
 
 /* Focus states — keyboard navigation must be visible */

@@ -1,0 +1,318 @@
+/* Hero — cinematic scroll-driven photo expand + identity reveal.
+   Recreated from React Bits' ScrollExpand (no React/GSAP/WebGL, per
+   architecture rules). Frame/media/scrim/reveal opacity are all set
+   inline by js/hero.js each frame based on scroll progress.
+
+   Overrides the generic `section {}` rule in main.css via class
+   specificity — .hero opts out of the site's mandatory scroll-snap so
+   the tall track below can be scrolled through freely; About (the next
+   <section>) keeps scroll-snap-align: start, so snapping resumes right
+   after the Hero releases. */
+
+.hero {
+    scroll-snap-align: none;
+    height: auto;
+    display: block;
+    padding: 0;
+}
+
+.hero-track {
+    position: relative;
+    width: 100%;
+    height: 230vh;
+}
+
+.hero-stage {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contained rounded frame at rest -> full-bleed once scrolled.
+   Geometry is driven by js/hero.js via inline clip-path/transform. */
+.hero-frame {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(21% 29% 21% 29% round var(--radius-lg));
+    will-change: clip-path;
+}
+
+.hero-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;
+    /* Editorial/personal treatment per design spec — grayscale/contrast
+       filter, not a color duotone. */
+    filter: grayscale(0.85) contrast(1.05) brightness(0.9);
+    transform: scale(1.08);
+    transform-origin: center;
+    will-change: transform;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.hero-scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.15) 0%,
+        rgba(0, 0, 0, 0.5) 28%,
+        rgba(0, 0, 0, 0.55) 60%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    opacity: 0;
+    will-change: opacity;
+}
+
+.hero-intro,
+.hero-reveal {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 6% 0;
+    pointer-events: none;
+    will-change: opacity, transform;
+}
+
+.hero-statement {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+    min-width: 0;
+    max-width: 100%;
+}
+
+.hero-hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1.5rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.hero-reveal {
+    opacity: 0;
+}
+
+.hero-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: var(--space-sm);
+    min-width: 0;
+    max-width: 100%;
+}
+
+.hero-name {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    color: #fff;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.hero-body {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 480px;
+    margin-top: var(--space-sm);
+    min-width: 0;
+}
+
+.hero-cta-row {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    pointer-events: auto;
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-primary,
+.btn-secondary {
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md);
+    transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    color: var(--bg-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+}
+
+.btn-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Hero -> About seam. The photo fades into var(--bg-primary) — About's
+   actual background color, theme-aware for free — before the hard DOM
+   boundary happens, so the cut reads as intentional instead of abrupt.
+   Blur alone can't do this: .hero-stage clips with overflow:hidden and
+   About sits entirely outside it, so there's nothing "behind" to blur
+   into — a color-matched gradient is what actually bridges the seam.
+   No JS, no mathjs, recreated from GradualBlur's masked-layer technique. */
+.hero-blur {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 34vh;
+    pointer-events: none;
+}
+
+.hero-blur::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Plain fallback first (no color-mix) for older browsers — a valid
+       later declaration for the same property simply overrides it where
+       supported, per normal CSS cascade behavior. */
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.08) 20%, var(--bg-primary) 62%, var(--bg-primary) 92%);
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.08) 20%,
+        color-mix(in srgb, var(--bg-primary) 55%, transparent) 62%,
+        var(--bg-primary) 92%
+    );
+}
+
+.hero-blur span {
+    position: absolute;
+    inset: 0;
+    mask-image: linear-gradient(to bottom, transparent, black);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black);
+}
+
+.hero-blur span:nth-child(1) {
+    backdrop-filter: blur(2px) saturate(0.85);
+    -webkit-backdrop-filter: blur(2px) saturate(0.85);
+}
+
+.hero-blur span:nth-child(2) {
+    backdrop-filter: blur(5px) saturate(0.7);
+    -webkit-backdrop-filter: blur(5px) saturate(0.7);
+}
+
+.hero-blur span:nth-child(3) {
+    backdrop-filter: blur(9px) saturate(0.55);
+    -webkit-backdrop-filter: blur(9px) saturate(0.55);
+}
+
+.hero-blur span:nth-child(4) {
+    backdrop-filter: blur(15px) saturate(0.4);
+    -webkit-backdrop-filter: blur(15px) saturate(0.4);
+}
+
+@media (max-width: 768px) {
+    /* Fallback pre-JS value only — js/hero.js now sets an inline height
+       using mobile-specific SCROLL_DISTANCE/HOLD_DISTANCE constants,
+       which overrides this. Kept close to that real value (~195vh) to
+       avoid a visible jump before JS runs. */
+    .hero-track {
+        height: 195vh;
+    }
+
+    .hero-frame {
+        clip-path: inset(15% 12% 15% 12% round var(--radius-lg));
+    }
+
+    .hero-media {
+        object-position: 50% 15%;
+    }
+
+    .hero-intro,
+    .hero-reveal {
+        padding-top: 90px;
+    }
+
+    .hero-name {
+        font-size: clamp(2rem, 8vw, 2.75rem);
+    }
+
+    .hero-cta-row {
+        flex-direction: column;
+        width: 100%;
+        max-width: 260px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        text-align: center;
+    }
+}
+
+/* Reduced motion: skip the scroll-driven animation entirely. js/hero.js
+   early-returns when this is set — everything below is static, and the
+   identity content is readable with zero scroll or interaction. */
+@media (prefers-reduced-motion: reduce) {
+    .hero-track {
+        height: auto;
+    }
+
+    .hero-stage {
+        position: relative;
+        height: 100vh;
+    }
+
+    .hero-frame {
+        clip-path: inset(0% round 0px) !important;
+    }
+
+    .hero-media {
+        transform: scale(1) !important;
+    }
+
+    .hero-intro {
+        display: none;
+    }
+
+    .hero-reveal {
+        opacity: 1 !important;
+        position: relative;
+        transform: none !important;
+    }
+
+    .hero-scrim {
+        opacity: 0.8 !important;
+    }
+}

@@ -4,14 +4,14 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Web Developer portfolio of Anamol Dhakal. 
-  I build modern, responsive web experiences." />
-  <title>Anamol Dhakal | Frontend Developer</title>
+  <meta name="description" content="Full-stack software engineering portfolio of Anamol Dhakal — BSc CSIT student building full-stack projects and exploring AI." />
+  <title>Anamol Dhakal | Full-Stack Software Engineer</title>
 
-  <link rel="stylesheet" href="css/reset.css" />
-  <link rel="stylesheet" href="css/variables.css" />
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/reset.css?v=2" />
+  <link rel="stylesheet" href="css/variables.css?v=2" />
+  <link rel="stylesheet" href="css/main.css?v=2" />
+  <link rel="stylesheet" href="css/animations.css?v=2" />
+  <link rel="stylesheet" href="css/hero.css?v=2" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 
 </head>
@@ -64,8 +64,38 @@
   <main>
 
     <section class="hero" id="hero">
-        <h1 class="hero-title">Anamol Dhakal</h1>
-        <p class="hero-subtitle">Frontend Developer</p>
+      <div class="hero-track" id="hero-track">
+        <div class="hero-stage" id="hero-stage">
+          <div class="hero-frame" id="hero-frame">
+            <img
+              src="assets/image/hero-pic.jpg"
+              alt="Portrait of Anamol Dhakal"
+              class="hero-media"
+              id="hero-media"
+            />
+            <div class="hero-scrim"></div>
+
+            <div class="hero-intro" id="hero-intro">
+              <p class="hero-statement">Curiosity, built into code.</p>
+              <p class="hero-hint">Scroll to explore ↓</p>
+            </div>
+
+            <div class="hero-reveal" id="hero-reveal">
+              <p class="hero-eyebrow">Full-Stack Software Engineer</p>
+              <h1 class="hero-name">Anamol Dhakal.</h1>
+              <p class="hero-body">BSc CSIT student building full-stack projects and exploring AI.</p>
+              <div class="hero-cta-row">
+                <a href="#projects" class="btn-primary">View Projects</a>
+                <a href="https://github.com/dhakalanamol-dev" class="btn-secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-blur" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="about" id="about">
@@ -189,9 +219,10 @@
 </footer>
 
 
-  <script src="js/theme.js"></script>
-  <script src="js/animations.js"></script>
-  <script src="js/navbar.js"></script>
+  <script src="js/theme.js?v=2"></script>
+  <script src="js/animations.js?v=2"></script>
+  <script src="js/navbar.js?v=2"></script>
+  <script src="js/hero.js?v=2"></script>
 
 </body>
 </html>
