@@ -214,7 +214,17 @@ section {
     margin-bottom: var(--space-md);
 }
 
+/* Atmospheric "reading light" — a soft, round glow pinned near the top
+   of the viewport for as long as any part of About is in view (sticky,
+   not fixed, so it releases naturally once the section ends). No JS —
+   height + equal negative margin-bottom keeps it from adding real space
+   to the layout while still being a sticky flex item. Deliberately a
+   fixed warm amber tone rather than var(--accent): the accent flips to
+   green in dark mode, which would read as a cold tint instead of a
+   cozy lamp glow. Pure CSS radial-gradient, no filter/blur/canvas/JS
+   cost. */
 .about {
+  position: relative;
   height: auto;
   min-height: 100vh;
   overflow-y: visible;
@@ -222,7 +232,28 @@ section {
   padding-top: 100px;
 }
 
+.about::before {
+  content: "";
+  position: sticky;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: 640px;
+  margin-bottom: -640px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  background: radial-gradient(ellipse 85% 85% at 50% -15%, rgba(255, 214, 150, 0.28) 0%, transparent 78%);
+}
+
+.about.ray-visible::before {
+  opacity: 1;
+}
+
 .about-content {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
@@ -277,16 +308,42 @@ section {
   margin-bottom: var(--space-xl);
 }
 
-.about-block p,
-.caption-text {
-  font-size: 1.05rem;
-}
-
 .placeholder-img {
+  position: relative;
   background-color: var(--bg-secondary);
   border: 1px solid var(--accent);
   border-radius: var(--radius-md);
   opacity: 0.4;
+  overflow: hidden;
+}
+
+/* Restrained constellation detail — a handful of static points near
+   the corners, not a border-wide glow. Pure CSS radial-gradients, no
+   SVG/JS/continuous animation. Sits on the frame's own opacity like
+   everything else on it, which is expected for a temporary placeholder. */
+.placeholder-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  transition: opacity var(--transition);
+  background-repeat: no-repeat;
+  background-size: 5px 5px;
+  background-image:
+    radial-gradient(circle, var(--accent) 1px, transparent 1.6px),
+    radial-gradient(circle, var(--accent) 1px, transparent 1.6px),
+    radial-gradient(circle, var(--accent) 1px, transparent 1.6px),
+    radial-gradient(circle, var(--accent) 1px, transparent 1.6px);
+  background-position:
+    14px 16px,
+    calc(100% - 18px) 22px,
+    18px calc(100% - 18px),
+    calc(100% - 16px) calc(100% - 24px);
+}
+
+.placeholder-img:hover::after {
+  opacity: 1;
 }
 
 .placeholder-tall {
@@ -308,16 +365,17 @@ section {
 
 .caption-text {
   font-size: 1.1rem;
+  font-style: italic;
   color: var(--text-secondary);
   line-height: 1.6;
 }
 
 .block-label {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 1.25rem;
+  text-transform: none;
+  letter-spacing: 0.01em;
   color: var(--accent);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
   font-weight: 600;
 }
 
@@ -327,16 +385,33 @@ section {
   color: var(--text-secondary);
 }
 
+/* Opening-sentence emphasis — presentation only, copy is unchanged.
+   600 weight, not browser-default <strong> bold (700), since the design
+   system reserves 700 for headlines only. */
+.block-lede {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
 
 @media (max-width: 900px) {
   .about-row,
   .about-row.reverse {
     grid-template-columns: 1fr;
     direction: ltr;
+    margin-bottom: var(--space-lg);
   }
 
   .placeholder-img {
     order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .about::before {
+    height: 340px;
+    margin-bottom: -340px;
+    background: radial-gradient(ellipse 90% 90% at 50% -15%, rgba(255, 214, 150, 0.24) 0%, transparent 78%);
   }
 }
 

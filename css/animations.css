@@ -153,7 +153,10 @@ body.hero-over-media .nav-link.active {
     .mobile-menu,
     .nav-pill,
     .hamburger-line,
-    .theme-toggle {
+    .theme-toggle,
+    .placeholder-img::after,
+    .about::before,
+    .reveal {
         transition: none !important;
     }
 }
