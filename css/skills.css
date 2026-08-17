@@ -1,0 +1,127 @@
+/* Skills section — own file per the "new sections get their own CSS
+   file from Skills onward" decision (main.css keeps legacy sections
+   as-is, not retroactively split). */
+
+.skills {
+  height: auto;
+  min-height: 100vh;
+  align-items: flex-start;
+  padding-top: 100px;
+}
+
+.skills-content {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+  text-align: left;
+}
+
+.skills-text .section-title {
+  text-align: left;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  margin-bottom: var(--space-xl);
+  font-weight: 600;
+}
+
+.skill-group {
+  margin-bottom: var(--space-xl);
+}
+
+.skill-group:last-child {
+  margin-bottom: 0;
+}
+
+/* Reuses .block-label's weight/letter-spacing values from About rather
+   than inventing a new label style. */
+.skill-group-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-md);
+}
+
+/* Card base — border-color hover only, no transform (the edge-light
+   glow below IS the hover interaction, a lift on top would be
+   redundant per the spec's "hover = opacity/color only" rule). */
+.skill-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  border: 1px solid var(--text-secondary);
+  border-radius: var(--radius-md);
+  overflow: visible;
+  isolation: isolate;
+  transition: border-color var(--transition);
+
+  /* Set by js/skills.js on pointermove; 0 at rest. */
+  --edge-proximity: 0;
+  --cursor-angle: 45deg;
+}
+
+.skill-card:hover {
+  border-color: var(--accent);
+}
+
+/* Edge-light glow — recreated from React Bits' BorderGlow, stripped
+   down to ONLY its single-hue directional glow layer. The original
+   component's mesh-gradient border/fill (::before/::after, a 3-hex
+   color set) is deliberately NOT recreated — it's a second/third hue
+   and breaks the locked one-accent rule. This layer alone still
+   satisfies "hover = illumination," which is what was approved. */
+.skill-card::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 100%, transparent),
+    inset 0 0 6px 0 color-mix(in srgb, var(--accent) 40%, transparent),
+    inset 0 0 15px 0 color-mix(in srgb, var(--accent) 25%, transparent),
+    0 0 6px 0 color-mix(in srgb, var(--accent) 40%, transparent),
+    0 0 15px 2px color-mix(in srgb, var(--accent) 20%, transparent);
+
+  mask-image: conic-gradient(
+    from var(--cursor-angle) at center,
+    black 2.5%, transparent 10%, transparent 90%, black 97.5%
+  );
+  opacity: calc((var(--edge-proximity) - 30) / 70);
+}
+
+.skill-icon {
+  font-size: 2.5rem;
+  color: var(--text-secondary);
+  transition: color var(--transition);
+}
+
+.skill-card:hover .skill-icon {
+  color: var(--accent);
+}
+
+.skill-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+  .skills-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+}

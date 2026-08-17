@@ -9,9 +9,10 @@
 
   <link rel="stylesheet" href="css/reset.css?v=14" />
   <link rel="stylesheet" href="css/variables.css?v=14" />
-  <link rel="stylesheet" href="css/main.css?v=14" />
-  <link rel="stylesheet" href="css/animations.css?v=14" />
+  <link rel="stylesheet" href="css/main.css?v=15" />
+  <link rel="stylesheet" href="css/animations.css?v=15" />
   <link rel="stylesheet" href="css/hero.css?v=14" />
+  <link rel="stylesheet" href="css/skills.css?v=1" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 
 </head>
@@ -144,30 +145,57 @@
     <div class="skills-text" >
       <h2 class="section-title">Tools I use to <span class="accent-text reveal">build</span>.</h2>
 
-      <div class="skills-grid">
-        <div class="skill-card reveal">
-          <i class="devicon-html5-plain colored skill-icon"></i>
-          <span class="skill-label">HTML</span>
+      <div class="skill-group reveal">
+        <h3 class="skill-group-label">Frontend</h3>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <i class="devicon-html5-plain skill-icon"></i>
+            <span class="skill-label">HTML</span>
+          </div>
+          <div class="skill-card">
+            <i class="devicon-css3-plain skill-icon"></i>
+            <span class="skill-label">CSS</span>
+          </div>
+          <div class="skill-card">
+            <i class="devicon-javascript-plain skill-icon"></i>
+            <span class="skill-label">JavaScript</span>
+          </div>
+          <div class="skill-card">
+            <i class="devicon-react-original skill-icon"></i>
+            <span class="skill-label">React</span>
+          </div>
+          <div class="skill-card">
+            <i class="devicon-typescript-plain skill-icon"></i>
+            <span class="skill-label">TypeScript</span>
+          </div>
         </div>
-        <div class="skill-card reveal">
-          <i class="devicon-css3-plain colored skill-icon"></i>
-          <span class="skill-label">CSS</span>
+      </div>
+
+      <div class="skill-group reveal">
+        <h3 class="skill-group-label">Backend &amp; Data</h3>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <i class="devicon-nodejs-plain skill-icon"></i>
+            <span class="skill-label">Node.js</span>
+          </div>
+          <div class="skill-card">
+            <i class="devicon-postgresql-plain skill-icon"></i>
+            <span class="skill-label">PostgreSQL</span>
+          </div>
         </div>
-        <div class="skill-card reveal">
-          <i class="devicon-javascript-plain colored skill-icon"></i>
-          <span class="skill-label">JavaScript</span>
-        </div>
-        <div class="skill-card reveal">
-          <i class="devicon-git-plain colored skill-icon"></i>
-          <span class="skill-label">Git</span>
-        </div>
-        <div class="skill-card reveal">
-          <i class="devicon-vscode-plain colored skill-icon"></i>
-          <span class="skill-label">VS Code</span>
-        </div>
-        <div class="skill-card reveal">
-          <i class="devicon-react-original colored skill-icon"></i>
-          <span class="skill-label">React</span>
+      </div>
+
+      <div class="skill-group reveal">
+        <h3 class="skill-group-label">Engineering</h3>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <i class="devicon-git-plain skill-icon"></i>
+            <span class="skill-label">Git</span>
+          </div>
+          <div class="skill-card">
+            <i class="devicon-docker-plain skill-icon"></i>
+            <span class="skill-label">Docker</span>
+          </div>
         </div>
       </div>
     </div>
@@ -224,6 +252,7 @@
   <script src="js/navbar.js?v=10"></script>
   <script src="js/hero.js?v=10"></script>
   <script src="js/about.js?v=10"></script>
+  <script src="js/skills.js?v=1"></script>
 
 </body>
 </html>

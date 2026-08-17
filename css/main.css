@@ -415,55 +415,6 @@ section {
   }
 }
 
-.skills-content {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: var(--space-xl);
-  align-items: start;
-  text-align: left;
-}
-
-.skills-text .section-title {
-  text-align: left;
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  margin-bottom: var(--space-xl);
-  font-weight: 600;
-}
-
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: var(--space-md);
-}
-
-.skill-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-lg);
-  border: 1px solid var(--text-secondary);
-  border-radius: var(--radius-md);
-  transition: border-color var(--transition), transform var(--transition);
-}
-
-.skill-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-4px);
-}
-
-.skill-icon {
-  font-size: 2.5rem;
-}
-
-.skill-label {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-
 .contact {
   height: auto;
   min-height: 100vh;
@@ -563,7 +514,6 @@ section {
    only reliably correct position for it. */
 @media (max-width: 900px) {
   .about-content,
-  .skills-content,
   .contact-content {
     grid-template-columns: 1fr;
     gap: var(--space-md);
