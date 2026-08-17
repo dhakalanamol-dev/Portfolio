@@ -157,6 +157,8 @@ body.hero-over-media .nav-link.active {
     .placeholder-img::after,
     .about::before,
     .skill-card::before,
+    .contact-link::before,
+    .contact-cta::before,
     .reveal {
         transition: none !important;
     }

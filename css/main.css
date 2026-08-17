@@ -446,20 +446,55 @@ section {
   max-width: 500px;
 }
 
+.contact-split {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
 .contact-links {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  max-width: 500px;
 }
 
 .contact-link {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: var(--space-md) 0;
   border-bottom: 1px solid var(--text-secondary);
   transition: border-color var(--transition), padding-left var(--transition);
+
+  /* Set by js/contact.js on pointermove; CSS default (50%/50%) is
+     the reduced-motion fallback — a static centered glow appears on
+     :hover without needing the listener at all. */
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+}
+
+.contact-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(
+    circle 180px at var(--mouse-x) var(--mouse-y),
+    color-mix(in srgb, var(--accent) 14%, transparent),
+    transparent 70%
+  );
+}
+
+.contact-link:hover::before,
+.contact-link:focus-within::before {
+  opacity: 1;
 }
 
 .contact-link:hover {
@@ -479,6 +514,89 @@ section {
   color: var(--text-primary);
   overflow-wrap: break-word;
   word-break: break-word;
+}
+
+.contact-arrow {
+  display: inline-block;
+  transition: color var(--transition);
+}
+
+.contact-link:hover .contact-arrow {
+  color: var(--accent);
+}
+
+/* Quiet outlined callout — deliberately not a filled/boxed card, per
+   spec: it exists to give the right side visual purpose, not to be
+   another decorative box. Same spotlight mechanic as .contact-link,
+   reused rather than reinvented. */
+.contact-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--text-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  transition: border-color var(--transition);
+
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+}
+
+.contact-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(
+    circle 220px at var(--mouse-x) var(--mouse-y),
+    color-mix(in srgb, var(--accent) 14%, transparent),
+    transparent 70%
+  );
+}
+
+.contact-cta:hover::before,
+.contact-cta:focus-within::before {
+  opacity: 1;
+}
+
+.contact-cta:hover {
+  border-color: var(--accent);
+}
+
+.contact-cta-prompt {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.contact-cta-line {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.contact-cta-link {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  transition: color var(--transition);
+  margin-top: var(--space-sm);
+}
+
+.contact-cta-link:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 700px) {
+  .contact-split {
+    grid-template-columns: 1fr;
+  }
 }
 
 .footer {
