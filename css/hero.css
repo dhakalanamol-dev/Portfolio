@@ -308,7 +308,6 @@
 
     .hero-reveal {
         opacity: 1 !important;
-        position: relative;
         transform: none !important;
     }
 
