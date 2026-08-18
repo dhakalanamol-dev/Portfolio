@@ -162,6 +162,17 @@ body.hero-over-media .nav-link.active {
     .reveal {
         transition: none !important;
     }
+
+    /* Marquee uses `animation`, not `transition` — pausing it would
+       leave an awkwardly frozen scrolling strip. Removing the
+       animation and resetting transform presents the content
+       statically instead, which reads as intentional rather than
+       broken. The marquee is aria-hidden anyway; Skills remains the
+       real accessible source of this content. */
+    .marquee-track {
+        animation: none;
+        transform: none;
+    }
 }
 
 

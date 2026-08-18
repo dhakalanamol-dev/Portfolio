@@ -599,14 +599,69 @@ section {
   }
 }
 
+/* Marquee — recreated from React Bits' scroll-velocity-footer as a
+   CONCEPT only: constant-speed CSS keyframe loop, not the original's
+   scroll-velocity-reactive `motion` implementation. Hand-rolling
+   scroll-velocity tracking for a decorative footer band isn't worth
+   the engineering cost, and a steady pace better fits "predictable,
+   not look-at-my-animation" than a velocity-reactive one would. */
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  border-top: 1px solid var(--text-secondary);
+  border-bottom: 1px solid var(--text-secondary);
+  padding: var(--space-lg) 0;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: var(--space-md);
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-item {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.marquee-dot {
+  color: var(--accent);
+  font-size: 1rem;
+  align-self: center;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 .footer {
   height: auto;
   scroll-snap-align: none;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: var(--space-md) var(--space-lg);
-  border-top: 1px solid var(--text-secondary);
+  align-items: flex-start;
+  gap: var(--space-lg);
+  padding: var(--space-xl) var(--space-lg);
+}
+
+.footer-identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.footer-name {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.footer-dot {
+  font-size: 0.6rem;
+  vertical-align: middle;
 }
 
 .footer-text,
@@ -619,8 +674,48 @@ section {
   transition: color var(--transition);
 }
 
-.footer-link:hover {
+.footer-link:hover,
+.footer-link:focus-visible {
   color: var(--accent);
+}
+
+.footer-social {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.footer-icon {
+  color: var(--text-secondary);
+  transition: color var(--transition);
+}
+
+.footer-icon:hover,
+.footer-icon:focus-visible {
+  color: var(--accent);
+}
+
+.footer-tagline {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+@media (max-width: 700px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-lg);
+  }
+
+  .footer-identity {
+    align-items: center;
+  }
+
+  .footer-tagline {
+    text-align: center;
+  }
 }
 
 /* Mobile grid collapse for the 200px/1fr section layouts — placed at
